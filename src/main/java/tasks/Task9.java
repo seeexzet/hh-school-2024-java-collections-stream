@@ -26,16 +26,21 @@ public class Task9 {
   // Костыль, эластик всегда выдает в топе "фальшивую персону".
   // Конвертируем начиная со второй
   public List<String> getNames(List<Person> persons) {
-    if (persons.size() == 0) {
+    if (persons.isEmpty()) {  // более удачная проверка на пустоту
       return Collections.emptyList();
     }
-    persons.remove(0);
-    return persons.stream().map(Person::firstName).collect(Collectors.toList());
+    return persons.stream() // стрим позволит не менять исходный список persons
+            .skip(1) //  пропуск фальшивой персоны
+            .map(Person::firstName)
+            .collect(Collectors.toList());
   }
 
   // Зачем-то нужны различные имена этих же персон (без учета фальшивой разумеется)
   public Set<String> getDifferentNames(List<Person> persons) {
-    return getNames(persons).stream().distinct().collect(Collectors.toSet());
+    return persons.stream()
+            .skip(1) // пропуск фальшивой персоны
+            .map(Person::firstName)
+            .collect(Collectors.toSet()); // Позволяет убрать доп.проверку уникальности
   }
 
   // Тут фронтовая логика, делаем за них работу - склеиваем ФИО
@@ -49,26 +54,26 @@ public class Task9 {
       result += " " + person.firstName();
     }
 
-    if (person.secondName() != null) {
-      result += " " + person.secondName();
+    if (person.middleName() != null) {  // здесь была ошибка (повторно secondName)
+      result += " " + person.middleName();
     }
     return result;
   }
 
   // словарь id персоны -> ее имя
   public Map<Integer, String> getPersonNames(Collection<Person> persons) {
-    Map<Integer, String> map = new HashMap<>(1);
-    for (Person person : persons) {
-      if (!map.containsKey(person.id())) {
-        map.put(person.id(), convertPersonToString(person));
-      }
-    }
+    Map<Integer, String> map = persons.stream() // построение словаря через стрим
+            .collect(Collectors.toMap(
+                    Person::id,
+                    this::convertPersonToString
+            ));
+
     return map;
   }
 
   // есть ли совпадающие в двух коллекциях персоны?
   public boolean hasSamePersons(Collection<Person> persons1, Collection<Person> persons2) {
-    boolean has = false;
+    boolean has = false;                  // не знаю, что исправить
     for (Person person1 : persons1) {
       for (Person person2 : persons2) {
         if (person1.equals(person2)) {
@@ -81,9 +86,10 @@ public class Task9 {
 
   // Посчитать число четных чисел
   public long countEven(Stream<Integer> numbers) {
-    count = 0;
-    numbers.filter(num -> num % 2 == 0).forEach(num -> count++);
-    return count;
+    long evenCount = numbers.filter(num -> num % 2 == 0) // Фильтрация по чётным
+            .count(); // Подсчёт количества
+
+    return evenCount;
   }
 
   // Загадка - объясните почему assert тут всегда верен
@@ -93,6 +99,6 @@ public class Task9 {
     List<Integer> snapshot = new ArrayList<>(integers);
     Collections.shuffle(integers);
     Set<Integer> set = new HashSet<>(integers);
-    assert snapshot.toString().equals(set.toString());
+    assert snapshot.toString().equals(set.toString()); // ответ не знаю, toString не сортирует элементы
   }
 }
