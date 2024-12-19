@@ -13,13 +13,11 @@ import java.util.stream.Collectors;
 public class Task3 {
 
   public static List<Person> sort(Collection<Person> persons) {
-    List<Person> sortedPersons = persons.stream()
+    return persons.stream()
             .sorted(Comparator
                     .comparing(Person::secondName) // сначала по фамилии
                     .thenComparing(Person::firstName) // если равны - по имени
                     .thenComparing(Person::createdAt)) // если равны - по дате создания
             .collect(Collectors.toList());
-
-    return sortedPersons;
   }
 }

@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
 Задача 2
@@ -20,13 +21,9 @@ public class Task2 {
                                                      Collection<Person> persons2,
                                                      int limit) {
 
-    // Объединяем две коллекции в одну
-    List<Person> combinedPersons = new ArrayList<>(persons1);
-    combinedPersons.addAll(persons2);
-
-    return combinedPersons.stream()
-            .sorted(Comparator.comparing(Person::createdAt)) // Сортитровка
-            .limit(limit) // выдача первых limit элементов
+    return Stream.concat(persons1.stream(), persons2.stream()) // Конкатенация двух потоков данных "на лету"
+            .sorted(Comparator.comparing(Person::createdAt)) // сортировка
+            .limit(limit)  // выдача первых заданных элементов
             .collect(Collectors.toList());
   }
 }

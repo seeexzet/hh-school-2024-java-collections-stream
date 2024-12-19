@@ -28,16 +28,13 @@ public class Task8 {
 
     Set<Resume> allResumes = personService.findResumes(personIds);  // Резюме персоны
 
-    Set<PersonWithResumes> personWithResumesSet = persons.stream() // преобразование в набор и фильтрация
-            .map(person -> {
-              Set<Resume> resumesForPerson = allResumes.stream()
-                      .filter(resume -> resume.personId().equals(person.id()))
-                      .collect(Collectors.toSet());
-
-              return new PersonWithResumes(person, resumesForPerson);
-            })
-            .collect(Collectors.toSet());  // преобразование потока в Set
-
-    return personWithResumesSet;
+      return persons.stream()
+              .map(person -> {
+                  Set<Resume> resumesForPerson = allResumes.stream()
+                          .filter(resume -> resume.personId().equals(person.id())) // фильтрация резюме по id
+                          .collect(Collectors.toSet());
+                  return new PersonWithResumes(person, resumesForPerson);
+              })
+              .collect(Collectors.toSet());
   }
 }

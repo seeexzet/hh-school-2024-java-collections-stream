@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /*
 Имеются
@@ -23,25 +24,17 @@ public class Task6 {
     Map<Integer, String> areaIdToNameMap = areas.stream()
             .collect(Collectors.toMap(Area::getId, Area::getName)); // быстрый доступ к региону по id
 
-    Set<String> descriptions = new HashSet<>();
-
-    for (Person person : persons) {
-      String personName = person.firstName();
-      Set<Integer> areaIds = personAreaIds.get(person.id()); // выбираются регионы, которые связаны с person
-
-      if (areaIds != null)
-      {
-        for (Integer areaId : areaIds)
-        {
-          String areaName = areaIdToNameMap.get(areaId);  // Создание строки для региона
-          if (areaName != null)
-          {
-            descriptions.add(personName + " - " + areaName);
-          }
-        }
-      }
-    }
-
-    return descriptions;
+    return persons.stream()
+            .flatMap(person -> { // обработка списка регионов
+              String personName = person.firstName();
+              Set<Integer> areaIds = personAreaIds.get(person.id());
+              return areaIds == null ?
+                      Stream.empty() :  // используем поток
+                      areaIds.stream()
+                              .map(areaId -> areaIdToNameMap.get(areaId))
+                              .filter(areaName -> areaName != null)
+                              .map(areaName -> personName + " - " + areaName);
+            })
+            .collect(Collectors.toSet());  // переводим поток эл-тов в множ-во
   }
 }
