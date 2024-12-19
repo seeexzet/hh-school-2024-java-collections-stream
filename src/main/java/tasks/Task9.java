@@ -82,6 +82,6 @@ public class Task9 {
     Collections.shuffle(integers);
     Set<Integer> set = new HashSet<>(integers);
     assert snapshot.toString().equals(set.toString()); // предположу, что .toString для HashSet выводит элементы
-                                                      // в том порядке, в каком они туда попали
+                                                      // в том же порядке, в каком они в него попали
   }
 }

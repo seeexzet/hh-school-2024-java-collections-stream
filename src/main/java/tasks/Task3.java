@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Task3 {
 
   public static List<Person> sort(Collection<Person> persons) {
-    return persons.stream()
+    return persons.stream() // вывод сразу, без лишнего присваивания
             .sorted(Comparator
                     .comparing(Person::secondName) // сначала по фамилии
                     .thenComparing(Person::firstName) // если равны - по имени

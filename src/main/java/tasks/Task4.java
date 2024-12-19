@@ -22,7 +22,7 @@ public class Task4 {
   }
 
   public List<ApiPersonDto> convert(List<Person> persons) {
-    return persons.stream()
+    return persons.stream() // вывод сразу, без лишнего присваивания
             .map(personConverter::convert)
             .collect(Collectors.toList()); // собирает в список
   }

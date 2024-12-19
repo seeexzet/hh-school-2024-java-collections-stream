@@ -35,6 +35,6 @@ public class Task6 {
                               .filter(areaName -> areaName != null)
                               .map(areaName -> personName + " - " + areaName);
             })
-            .collect(Collectors.toSet());  // переводим поток эл-тов в множ-во
+            .collect(Collectors.toSet());  // переводим поток элементов в множ-во
   }
 }

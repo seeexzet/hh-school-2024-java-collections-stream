@@ -21,7 +21,7 @@ public class Task2 {
                                                      Collection<Person> persons2,
                                                      int limit) {
 
-    return Stream.concat(persons1.stream(), persons2.stream()) // Конкатенация двух потоков данных "на лету"
+    return Stream.concat(persons1.stream(), persons2.stream()) // Конкатенация двух потоков данных "на лету",  вывод сразу, без лишнего присваивания
             .sorted(Comparator.comparing(Person::createdAt)) // сортировка
             .limit(limit)  // выдача первых заданных элементов
             .collect(Collectors.toList());

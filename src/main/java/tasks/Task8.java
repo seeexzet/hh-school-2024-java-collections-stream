@@ -28,7 +28,7 @@ public class Task8 {
 
     Set<Resume> allResumes = personService.findResumes(personIds);  // Резюме персоны
 
-      return persons.stream()
+      return persons.stream() // вывод сразу, без лишнего присваивания
               .map(person -> {
                   Set<Resume> resumesForPerson = allResumes.stream()
                           .filter(resume -> resume.personId().equals(person.id())) // фильтрация резюме по id

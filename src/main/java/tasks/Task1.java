@@ -26,8 +26,7 @@ public class Task1 {
     // Создаем мапу для удобного маппинга ID на Person
     Map<Integer, Person> personMap = new HashMap<>();
     for (Person person : persons) {
-      personMap.put(person.id(), person); // В лекциях говорилось, что это плохой вариант и нужна функция,
-                                          // но указания менять Person.java не было, поэтому не стал
+      personMap.put(person.id(), person);
     }
 
     List<Person> ordPersons = new ArrayList<>();

@@ -24,10 +24,10 @@ public class Task5 {
   }
 
     public List<ApiPersonDto> convert(List<Person> persons, Map<Integer, Integer> personAreaIds) {
-        return persons.stream()
+        return persons.stream() // вывод сразу, без лишнего присваивания
                 .map(person -> {
                     ApiPersonDto dto = personConverter.convert(person); // преобразование
-                    Integer areaId = personAreaIds.get(person.id()); // areaId берётся из person, по id
+                    Integer areaId = personAreaIds.get(person.id()); // areaId берётся по id из person
                     dto.setAreaId(areaId); // присваиваем текущему экземпляру id региона
                     return dto;
                 })

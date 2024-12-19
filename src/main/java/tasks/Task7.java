@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Task7 {
 
   public static Set<String> vacancyNames(Collection<Company> companies) {
-    return companies.stream()
+    return companies.stream() // вывод сразу, без лишнего присваивания
             .flatMap(company -> company.getVacancies().stream())
             .map(Vacancy::getTitle) // получение каждой из вакансий
             .collect(Collectors.toSet()); // преобразование в множество
